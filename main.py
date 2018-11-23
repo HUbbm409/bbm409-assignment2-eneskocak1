@@ -39,7 +39,7 @@ def All_Results(number):
 
     t = pd.DataFrame({"N_gram":ngramlist, 'Stop words':stopwordlist,"Stem":stemlist,"TF-IDF":tfidflist,"Correct classified":correctlist,"Accuracy":accuracylist},) # Create a new table with 5 rows and 3 columns
     print(t)
-    #trace = go.Table(header=dict(values=["N_gram", 'Stop words',"Stem","TF-IDF","Correct classified","Accuracy"]),
+    
     
 
 
@@ -60,6 +60,8 @@ def main(BoW_gram,stopWords=None,tfidf=False,Stemming=False,PrintCommand=None):
                             #NAIVE BAYES ALGORITHM
     #########################################################################################
     classifier_list=naive_bayes(real_vectorizer,real_word_matrix,real_frequency_dict,fake_vectorizer,fake_word_matrix,fake_frequency_dict,test_line_list,BoW_gram,stopWords)
+    #############################################################################################
+    ##                      CALCULATING ACCURACY IN HERE 
     accuracy,correctedclassified = Accuracy(truelist,classifier_list,PrintCommand=PrintCommand)
     if PrintCommand=="General Results":
         print("Steamming :",Stemming)
@@ -81,6 +83,8 @@ def main(BoW_gram,stopWords=None,tfidf=False,Stemming=False,PrintCommand=None):
         4. "specific" : returned specific words for real and fake datas"""
         
 #All_Results(2)
+""" some examples in here """
+#main(1,stopWords="english",Stemming=False,tfidf=False,PrintCommand="General Results")
 #main(1,stopWords="english",Stemming=False,tfidf=False,PrintCommand="specific")
 #main(1,stopWords="english",Stemming=False,tfidf=True,PrintCommand="presence")
 #main(1,stopWords="english",Stemming=False,tfidf=True,PrintCommand="absence")
