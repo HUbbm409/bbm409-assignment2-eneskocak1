@@ -26,7 +26,7 @@ def naive_bayes(real_vectorizer,real_word_matrix,real_frequency_dict,fake_vector
     # computing bayes theorem with laplace smoothing #
     test_classifier_result=[]
     for line in test_line_list:
-        test_vectorizer = CountVectorizer(ngram_range=(2,BoW_gram),stop_words=stopWords,analyzer='word')
+        test_vectorizer = CountVectorizer(ngram_range=(BoW_gram,BoW_gram),stop_words=stopWords,analyzer='word')
         line_list= []
         line_list.append(line)
         test_word_matrix = test_vectorizer.fit_transform(line_list)
@@ -35,13 +35,13 @@ def naive_bayes(real_vectorizer,real_word_matrix,real_frequency_dict,fake_vector
         probabilty_fake=0
         
 
-      
+        # calculating conditional probabiltys here and if word not in uniq set applying smoothing.
         for item,value in test_vectorizer.vocabulary_.items():
             probabilty_real += test_word_matrix.toarray()[0,value]*np.log10((real_frequency_dict.get(item,0)+1)/(real_words_count + uniq_words_count)) #sum of probabilties real
             probabilty_fake += test_word_matrix.toarray()[0,value]*np.log10((fake_frequency_dict.get(item,0)+1)/(fake_words_count + uniq_words_count)) #sum of probabilties fake
                    
-        probabilty_real= probabilty_real + np.log10(p_real)# probabilty of new is real
-        probabilty_fake= probabilty_fake + np.log10(p_fake)# probabilty of new is fake
+        probabilty_real= probabilty_real + np.log10(p_real)# probabilty of news is real
+        probabilty_fake= probabilty_fake + np.log10(p_fake)# probabilty of news is fake
         if probabilty_real > probabilty_fake:
     
             test_classifier_result.append("real")

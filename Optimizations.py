@@ -6,15 +6,17 @@ import pandas as pd
 
 def list_tokenizer(reallist,fakelist,testlist,BoW,steamming):
     
-    #print(reallist[0])
+   
     porter_stemmer = PorterStemmer()   
     for i in range(len(reallist)):
+        # words was stemming here when stemming == true;
         if steamming==True:
             nltk_tokens = nltk.word_tokenize(reallist[i])
             new_string=""
             for w in nltk_tokens:
                 new_string += porter_stemmer.stem(w)+" "
             reallist[i]=new_string
+         # when n_gram == 2 ; adding token start of line and end of line 
         if BoW==2:
             reallist[i]="_s_ " + reallist[i]+ " _eos_"
         
@@ -47,6 +49,7 @@ def dedect_specific_words(real_word_matrix,real_word_id_dict,fake_word_matrix,fa
     ##############################################
     #                  PART 1                    #
     # Detecting 3 specific word for clustering   #
+    # AND PART3 RESULTS DETECTED IN WORD_HISTOGRAM
     ##############################################
   
     real_word_frequencies = real_word_matrix.sum(axis=0)
@@ -77,6 +80,8 @@ def dedect_specific_words(real_word_matrix,real_word_id_dict,fake_word_matrix,fa
 def word_histogram(realwords,fakewords,wordnumber,Type=None):
     realdict={}
     fakedict={}
+    
+    # detecting deiffrence sets real and fake class's #
     for (item,value) in realwords.items():
         if item not in fakewords.keys():
             realdict[item]=value
@@ -86,7 +91,8 @@ def word_histogram(realwords,fakewords,wordnumber,Type=None):
     for item,value in fakewords.items():
         if item not in realwords.keys():
             fakedict[item]=value
-    
+    # sorting by frequency
+    # this is same with conditional probailtys. because the denaminators are the same 
     fakelist= list(fakedict.items())
     fakelist =sorted(fakelist,key=lambda l:l[1], reverse=True)
     

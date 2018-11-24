@@ -15,10 +15,10 @@ def readfile(real,fake,test):
     fakefile.close()
     #print(len(realstring),len(fakestring))
     testfile = pd.read_csv(test,sep=",",encoding="latin-1",error_bad_lines=False,warn_bad_lines=False,low_memory=False)
-    testfile.columns=["line","class"]
-    trueclassifedlist=testfile["class"].tolist()
-    teststring = testfile["line"].tolist() 
+    testfile.columns=["Id","Category"]
+    trueclassifedlist=testfile["Category"].tolist()
+    teststring = testfile["Id"].tolist() 
     #print(len(realstring),len(fakestring),len(teststring))
-    return realstring,fakestring,teststring,trueclassifedlist
+    return realstring,fakestring,teststring,trueclassifedlist,testfile
 ###########################################################################################################
     

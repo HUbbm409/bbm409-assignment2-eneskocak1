@@ -46,7 +46,7 @@ def All_Results(number):
 def main(BoW_gram,stopWords=None,tfidf=False,Stemming=False,PrintCommand=None):
                             #READING DATAS
     #########################################################################################
-    real_line_list,fake_line_list,test_line_list,truelist = readfile(real,fake,test)
+    real_line_list,fake_line_list,test_line_list,truelist,testfile = readfile(real,fake,test)
     list_tokenizer(real_line_list,fake_line_list,test_line_list,BoW_gram,Stemming)
                             #CONVERT VECTORIZER FORM LINES
     #########################################################################################
@@ -63,6 +63,10 @@ def main(BoW_gram,stopWords=None,tfidf=False,Stemming=False,PrintCommand=None):
     #############################################################################################
     ##                      CALCULATING ACCURACY IN HERE 
     accuracy,correctedclassified = Accuracy(truelist,classifier_list,PrintCommand=PrintCommand)
+    """here for kaggle output"""
+    #testfile["Category"]=classifier_list
+    #testfile.to_csv('out.csv ',encoding='utf-8', index=False)
+    #print(testfile)
     if PrintCommand=="General Results":
         print("Steamming :",Stemming)
         print("TF-IDF :",tfidf)
